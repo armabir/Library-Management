@@ -2,6 +2,7 @@ package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.interfaces.VendorServiceInterface;
 import com.example.librarymanagement.model.Vendor;
+import com.example.librarymanagement.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,89 +13,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VendorService implements VendorServiceInterface {
 
-    @Autowired
-    private DataSource dataSource;
+    private final VendorRepository vendorRepository;
 
-    public final List<Vendor> vendorList = new ArrayList<>();
-
-    public void toList(){
-        vendorList.clear();
-        String sql = "SELECT * FROM vendor";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String phone = rs.getString("phone");
-
-                vendorList.add(new Vendor(name, email, phone));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public VendorService(VendorRepository vendorRepository) {
+        this.vendorRepository = vendorRepository;
     }
 
     public List<Vendor> getALL() {
-        toList();
-        return vendorList;
+        return vendorRepository.findAll();
     }
 
     public Vendor save(Vendor vendor){
-        if(getByName(vendor.getName()) != null){
+        Optional<Vendor> optional = vendorRepository.findById(vendor.getName());
+        if (optional.isPresent()){
             System.out.println("Vendor already Exist");
             return null;
         }
-
-        String sql = "INSERT INTO vendor (name, email, phone) VALUES (?,?,?)";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, vendor.getName());
-            statement.setString(2, vendor.getEmail());
-            statement.setString(3, vendor.getPhone());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        vendorRepository.save(vendor);
         return vendor;
     }
 
-    public Vendor getByName(String name){
-        toList();
-        return vendorList.stream()
-                .filter(v -> v.getName().equals(name))
-                .findFirst().orElse(null);
-    }
-
-    public boolean exists(String name){
-        toList();
-        return vendorList.stream()
-                .anyMatch(v -> v.getName().equals(name));
-    }
-
     public void delete(String name){
-        String sql = "DELETE FROM vendor WHERE name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        toList();
+        vendorRepository.deleteById(name);
     }
 
     public void update(Vendor vendor){
-        delete(vendor.getName());
-        save(vendor);
+        vendorRepository.save(vendor);
     }
 }
