@@ -3,6 +3,8 @@ package com.example.librarymanagement.service;
 import com.example.librarymanagement.interfaces.PublicationServiceInterface;
 import com.example.librarymanagement.model.Publication;
 import com.example.librarymanagement.model.User;
+import com.example.librarymanagement.model.Vendor;
+import com.example.librarymanagement.repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -15,83 +17,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PublicationService implements PublicationServiceInterface {
 
-    @Autowired
-    private DataSource dataSource;
+    private final PublicationRepository repository;
 
-    public final List<Publication> publicationList = new ArrayList<>();
-
-    public void toList(){
-        publicationList.clear();
-        String sql = "SELECT * FROM publication";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String address = rs.getString("address");
-                String description = rs.getString("description");
-
-                publicationList.add(new Publication(name, address, description));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public PublicationService(PublicationRepository repository) {
+        this.repository = repository;
     }
 
     public List<Publication> getALL() {
-        toList();
-        return publicationList;
+        return repository.findAll();
     }
 
     public Publication save(Publication publication){
-        if(getByName(publication.getName()) != null){
+        Optional<Publication> optional = repository.findById(publication.getName());
+        if (optional.isPresent()){
             System.out.println("Publication already Exist");
             return null;
         }
-
-        String sql = "INSERT INTO publication (name, address, description) VALUES (?,?,?)";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, publication.getName());
-                statement.setString(2, publication.getAddress());
-                statement.setString(3, publication.getDescription());
-
-                statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        repository.save(publication);
         return publication;
     }
 
-    public Publication getByName(String name){
-        toList();
-        return publicationList.stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst().orElse(null);
-    }
-
     public void delete(String name){
-        String sql = "DELETE FROM publication WHERE name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        repository.deleteById(name);
     }
 
     public void update(Publication publication){
-        delete(publication.getName());
-        save(publication);
+        repository.save(publication);
     }
 }
