@@ -2,6 +2,8 @@ package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.interfaces.BookServiceInterface;
 import com.example.librarymanagement.model.Book;
+import com.example.librarymanagement.model.Publication;
+import com.example.librarymanagement.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,101 +14,40 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService implements BookServiceInterface {
 
     @Autowired
-    private DataSource dataSource;
+    DataSource dataSource;
 
-    public final List<Book> bookList = new ArrayList<>();
+    private final BookRepository repository;
 
-    public void toList(){
-        bookList.clear();
-        String sql = "SELECT * FROM book";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet rs = statement.executeQuery()) {
-            while (rs.next()) {
-                String bookName = rs.getString("book_name");
-                String bookImage = rs.getString("book_image");
-                String authorName = rs.getString("author_name");
-                String publisherName = rs.getString("publisher_name");
-                int availableQuantity = rs.getInt("available_quantity");
-
-                bookList.add(new Book(bookName, bookImage, authorName, publisherName, availableQuantity));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public BookService(BookRepository repository) {
+        this.repository = repository;
     }
 
     public List<Book> getALL() {
-        toList();
-        return bookList;
+        return repository.findAll();
     }
 
     public Book save(Book book){
-        if(getByBookName(book.getBookName()) != null){
+        Optional<Book> optional = repository.findById(book.getBookName());
+        if (optional.isPresent()){
             System.out.println("Book already Exist");
             return null;
         }
-
-        String sql = "INSERT INTO book (book_name, book_image, author_name, publisher_name, available_quantity) VALUES (?,?,?,?,?)";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, book.getBookName());
-            statement.setString(2, book.getBookImage());
-            statement.setString(3, book.getAuthorName());
-            statement.setString(4, book.getPublisherName());
-            statement.setInt(5, book.getAvailableQuantity());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        repository.save(book);
         return book;
     }
 
-    public Book getByBookName(String bookName){
-        toList();
-        return bookList.stream()
-                .filter(b -> b.getBookName().equals(bookName))
-                .findFirst().orElse(null);
-    }
-
     public void delete(String bookName){
-        String sql = "DELETE FROM book WHERE book_name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, bookName);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        toList();
+        repository.deleteById(bookName);
     }
 
     public void update(Book book){
-        String sql = "UPDATE book SET book_image = ?, author_name = ?, publisher_name = ? WHERE book_name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, book.getBookImage());
-            statement.setString(2, book.getAuthorName());
-            statement.setString(3, book.getPublisherName());
-            statement.setString(4, book.getBookName());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        toList();
+        repository.save(book);
     }
 
     // used for purchase
@@ -122,7 +63,6 @@ public class BookService implements BookServiceInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        toList();
     }
 
     // used for allotment
@@ -138,7 +78,6 @@ public class BookService implements BookServiceInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        toList();
     }
 
     // used for return
@@ -154,6 +93,5 @@ public class BookService implements BookServiceInterface {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        toList();
     }
 }

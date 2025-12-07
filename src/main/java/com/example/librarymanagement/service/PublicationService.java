@@ -42,6 +42,10 @@ public class PublicationService implements PublicationServiceInterface {
         return publication;
     }
 
+    public Publication getByName(String name){
+        return repository.findById(name).orElse(null);
+    }
+
     public void delete(String name){
         repository.deleteById(name);
     }
