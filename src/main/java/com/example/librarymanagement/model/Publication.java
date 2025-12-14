@@ -20,4 +20,13 @@ public class Publication {
     private String name;
     private String address;
     private String description;
+
+    @OneToMany(mappedBy = "publisherName")
+    private List<Book> bookList;
+
+    public Publication(String description, String address, String name) {
+        this.description = description;
+        this.address = address;
+        this.name = name;
+    }
 }

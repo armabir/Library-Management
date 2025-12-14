@@ -24,7 +24,7 @@ public class BookController {
 
     @GetMapping("book")
     public String getBook(Model model){
-        model.addAttribute("dto", new BookDto("", "", "", ""));
+        model.addAttribute("dto", new BookDto("", "", null, ""));
 
         List<Book> bookList = bookService.getALL();
         model.addAttribute("books", bookList);
