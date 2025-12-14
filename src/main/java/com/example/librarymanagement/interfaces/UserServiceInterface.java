@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface UserServiceInterface {
     User saveUser(User user);
-    User getByEmail(String email);
-    boolean exists(String email, String password);
     List<User> getALL();
     void delete(String email);
     void update(User user);

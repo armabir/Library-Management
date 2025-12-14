@@ -35,7 +35,7 @@ public class LoginController {
     public String login(@ModelAttribute LoginDto dto, HttpSession session){
         System.out.println("Login: " + dto);
 
-        if(service.exists(dto.email(), dto.pass())){
+        if(service.exists(dto.email(), dto.pass()) != null){
             User user = service.getByEmail(dto.email());
             session.setAttribute("name", user.getName());
             return "redirect:/";

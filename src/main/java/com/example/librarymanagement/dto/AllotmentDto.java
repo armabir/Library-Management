@@ -10,6 +10,6 @@ public record AllotmentDto(String bookName, String studentEmail, String subscrip
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate start = LocalDate.parse(startDate, formatter);
         LocalDate end = LocalDate.parse(endDate, formatter);
-        return new Allotment(null, bookName, studentEmail, subscriptionType, start, end, LocalDate.now());
+        return new Allotment( bookName, studentEmail, subscriptionType, start, end, LocalDate.now());
     }
 }

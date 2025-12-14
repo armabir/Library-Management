@@ -9,7 +9,5 @@ public interface BookServiceInterface {
     Book save(Book book);
     void delete(String bookName);
     void update(Book book);
-    void updateQuantity(String bookName, Integer newQuantity);
-    void decreaseQuantity(String bookName, Integer quantity);
-    void increaseQuantity(String bookName, Integer quantity);
+    void updateQuantity(String bookName, int quantity);
 }

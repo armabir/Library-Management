@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface AllotmentServiceInterface {
-    void toList();
     List<Allotment> getALL ();
     Allotment save(Allotment allotment);
     void delete (Integer id);
-    Allotment getById(Integer id);
 }

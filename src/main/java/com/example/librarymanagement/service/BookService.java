@@ -50,48 +50,11 @@ public class BookService implements BookServiceInterface {
         repository.save(book);
     }
 
-    // used for purchase
-    public void updateQuantity(String bookName, Integer newQuantity){
-        String sql = "UPDATE book SET available_quantity = available_quantity + ? WHERE book_name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, newQuantity);
-            statement.setString(2, bookName);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    // used for purchase, allotment, return
+    public void updateQuantity(String bookName, int quantity){
+        Book book = repository.findById(bookName).orElse(null);
+        book.setAvailableQuantity(book.getAvailableQuantity() + quantity);
+        repository.save(book);
     }
 
-    // used for allotment
-    public void decreaseQuantity(String bookName, Integer quantity){
-        String sql = "UPDATE book SET available_quantity = available_quantity - ? WHERE book_name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, quantity);
-            statement.setString(2, bookName);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // used for return
-    public void increaseQuantity(String bookName, Integer quantity){
-        String sql = "UPDATE book SET available_quantity = available_quantity + ? WHERE book_name = ?";
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, quantity);
-            statement.setString(2, bookName);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

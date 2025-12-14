@@ -34,9 +34,7 @@ public class AllotmentHistoryController {
     @PostMapping("allotment-history/{id}/delete")
     public String deleteAllotment(@PathVariable Integer id){
 
-        Allotment allotment = allotmentService.getById(id);
         allotmentService.delete(id);
-        bookService.increaseQuantity(allotment.getBookName(), 1);
 
         return "redirect:/allotment-history?success=true";
     }

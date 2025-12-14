@@ -10,6 +10,6 @@ public record PurchaseDto(String bookName, String vendor, Integer quantity, Doub
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(purchaseDate, formatter);
         Double totalAmount = quantity * perBookPrice;
-        return new Purchase(null, bookName, vendor, quantity, perBookPrice, totalAmount, date);
+        return new Purchase(bookName, vendor, quantity, perBookPrice, totalAmount, date);
     }
 }
