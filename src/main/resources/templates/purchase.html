@@ -145,8 +145,8 @@
                     <tbody>
                     <tr th:each="p, pp : ${purchases}">
                         <td><span th:text="${pp.count}"></span></td>
-                        <td><span th:text="${p.bookName}"></span></td>
-                        <td><span th:text="${p.vendor}"></span></td>
+                        <td><span th:text="${p.book.bookName}"></span></td>
+                        <td><span th:text="${p.vendor.name}"></span></td>
                         <td><span th:text="${p.quantity}"></span></td>
                         <td><span th:text="'₹' + ${p.perBookPrice}"></span></td>
                         <td><span th:text="'₹' + ${p.totalAmount}"></span></td>

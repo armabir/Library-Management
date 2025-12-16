@@ -144,10 +144,10 @@
                     <tbody>
                     <tr th:each="allot, a : ${allotments}">
                         <td><span th:text="${a.count}"></span></td>
-                        <td><span th:text="${allot.bookName}"></span></td>
+                        <td><span th:text="${allot.book.bookName}"></span></td>
                         <td><span th:text="${allot.studentEmail}"></span></td>
                         <td>
-                            <span class="subscription-badge" th:text="${allot.subscriptionType}"></span>
+                            <span class="subscription-badge" th:text="${allot.subscriptionType.title}"></span>
                         </td>
                         <td><span th:text="${allot.startDate}"></span></td>
                         <td><span th:text="${allot.endDate}"></span></td>

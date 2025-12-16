@@ -1,29 +1,35 @@
 package com.example.librarymanagement.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "purchases")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String bookName;
-    private String vendor;
     private int quantity;
     private Double perBookPrice;
     private Double totalAmount;
     private LocalDate purchaseDate;
 
-    public Purchase(String bookName, String vendor, int quantity, Double perBookPrice, Double totalAmount, LocalDate purchaseDate) {
-        this.bookName = bookName;
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    private Vendor vendor;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    public Purchase(Book book, Vendor vendor, int quantity, Double perBookPrice, Double totalAmount, LocalDate purchaseDate) {
+        this.book = book;
         this.vendor = vendor;
         this.quantity = quantity;
         this.perBookPrice = perBookPrice;

@@ -9,5 +9,5 @@ public interface BookServiceInterface {
     Book save(Book book);
     void delete(String bookName);
     void update(Book book);
-    void updateQuantity(String bookName, int quantity);
+    void updateQuantity(Book book, int quantity);
 }

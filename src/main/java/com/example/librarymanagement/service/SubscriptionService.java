@@ -1,6 +1,7 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.interfaces.SubscriptionServiceInterface;
+import com.example.librarymanagement.model.Publication;
 import com.example.librarymanagement.model.Subscription;
 import com.example.librarymanagement.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class SubscriptionService implements SubscriptionServiceInterface {
         }
         repository.save(subscription);
         return subscription;
+    }
+
+    public boolean hasNoChild(String name){
+        Subscription subscription = repository.findById(name).orElse(null);
+        return subscription.getAllotmentList().isEmpty();
     }
 
     public void delete(String title){

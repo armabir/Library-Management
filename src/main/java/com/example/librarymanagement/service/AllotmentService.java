@@ -36,13 +36,13 @@ public class AllotmentService implements AllotmentServiceInterface {
             return null;
         }
         repository.save(allotment);
-        bookService.updateQuantity(allotment.getBookName(), -1);
+        bookService.updateQuantity(allotment.getBook(), -1);
         return allotment;
     }
 
     public void delete(Integer id){
         Allotment allotment = repository.findById(id).orElse(null);
-        bookService.updateQuantity(allotment.getBookName(), -1);
+        bookService.updateQuantity(allotment.getBook(), -1);
         repository.deleteById(id);
     }
 }

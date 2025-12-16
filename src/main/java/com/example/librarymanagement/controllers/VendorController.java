@@ -49,10 +49,11 @@ public class VendorController {
 
     @PostMapping("vendor/{name}/delete")
     public String deleteVendor(@PathVariable String name){
-        System.out.println("check Delete");
-
-        service.delete(name);
-        return "redirect:/vendor";
+        if(service.hasNoChild(name)){
+            service.delete(name);
+            return "redirect:/vendor";
+        }
+        return "redirect:/vendor?child=true";
     }
 
     @PostMapping("vendor/update")

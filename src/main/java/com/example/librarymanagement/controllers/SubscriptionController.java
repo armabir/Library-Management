@@ -54,8 +54,11 @@ public class SubscriptionController {
 
     @PostMapping("subscription/{title}")
     public String deleteSubscription(@PathVariable String title){
-        service.delete(title);
-        return "redirect:/subscription";
+        if(service.hasNoChild(title)){
+            service.delete(title);
+            return "redirect:/subscription";
+        }
+        return "redirect:/subscription?child=true";
     }
 
 }

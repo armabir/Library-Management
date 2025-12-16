@@ -1,29 +1,35 @@
 package com.example.librarymanagement.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "allotments")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Allotment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String bookName;
     private String studentEmail;
-    private String subscriptionType;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate allotmentDate;
 
-    public Allotment(String bookName, String studentEmail, String subscriptionType, LocalDate startDate, LocalDate endDate, LocalDate allotmentDate) {
-        this.bookName = bookName;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "subscription_id")
+    private Subscription subscriptionType;
+
+    public Allotment(Book book, String studentEmail, Subscription subscriptionType, LocalDate startDate, LocalDate endDate, LocalDate allotmentDate) {
+        this.book = book;
         this.studentEmail = studentEmail;
         this.subscriptionType = subscriptionType;
         this.startDate = startDate;

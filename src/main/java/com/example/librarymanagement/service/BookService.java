@@ -51,8 +51,7 @@ public class BookService implements BookServiceInterface {
     }
 
     // used for purchase, allotment, return
-    public void updateQuantity(String bookName, int quantity){
-        Book book = repository.findById(bookName).orElse(null);
+    public void updateQuantity(Book book, int quantity){
         book.setAvailableQuantity(book.getAvailableQuantity() + quantity);
         repository.save(book);
     }

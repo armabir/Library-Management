@@ -126,6 +126,10 @@
                     <span class="toast-message">Vendor already Exists!</span>
                 </div>
 
+                <div th:if="${param.child}" class="toast">
+                    <span class="toast-message">Can't delete vendor with existing purchases</span>
+                </div>
+
                 <!-- Table -->
                 <div class="table-wrapper">
                     <table class="data-table">

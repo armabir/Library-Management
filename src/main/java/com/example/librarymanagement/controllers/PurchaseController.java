@@ -29,7 +29,7 @@ public class PurchaseController {
 
     @GetMapping("purchase")
     public String getPurchase(Model model){
-        model.addAttribute("dto", new PurchaseDto("", "", 0, 0.0, ""));
+        model.addAttribute("dto", new PurchaseDto(null, null, 0, 0.0, ""));
 
         List<Purchase> purchaseList = purchaseService.getALL();
         model.addAttribute("purchases", purchaseList);

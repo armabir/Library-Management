@@ -7,6 +7,7 @@ import java.util.List;
 public interface SubscriptionServiceInterface {
     List<Subscription> getALL();
     Subscription save(Subscription subscription);
+    boolean hasNoChild(String name);
     void delete(String title);
     void update(Subscription subscription);
 }

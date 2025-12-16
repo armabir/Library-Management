@@ -3,6 +3,7 @@ package com.example.librarymanagement.service;
 import com.example.librarymanagement.interfaces.PublicationServiceInterface;
 import com.example.librarymanagement.interfaces.PurchaseServiceInterface;
 import com.example.librarymanagement.model.Book;
+import com.example.librarymanagement.model.Publication;
 import com.example.librarymanagement.model.Purchase;
 import com.example.librarymanagement.model.Student;
 import com.example.librarymanagement.repository.PurchaseRepository;
@@ -39,7 +40,7 @@ public class PurchaseService implements PurchaseServiceInterface {
         }
         repository.save(purchase);
         //// can we reduce this code with hibernate??
-        bookService.updateQuantity(purchase.getBookName(), purchase.getQuantity());
+        bookService.updateQuantity(purchase.getBook(), purchase.getQuantity());
         return purchase;
     }
 

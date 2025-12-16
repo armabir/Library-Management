@@ -1,6 +1,7 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.interfaces.VendorServiceInterface;
+import com.example.librarymanagement.model.Publication;
 import com.example.librarymanagement.model.Vendor;
 import com.example.librarymanagement.repository.VendorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,11 @@ public class VendorService implements VendorServiceInterface {
         }
         vendorRepository.save(vendor);
         return vendor;
+    }
+
+    public boolean hasNoChild(String name){
+        Vendor vendor = vendorRepository.findById(name).orElse(null);
+        return vendor.getPurchaseList().isEmpty();
     }
 
     public void delete(String name){

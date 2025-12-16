@@ -57,6 +57,7 @@ public class BookController {
     @PostMapping("book/update")
     public String updateQuantity(@ModelAttribute BookDto dto){
 
+        System.out.println(dto);
         bookService.update(dto.toBook());
         return "redirect:/book";
     }

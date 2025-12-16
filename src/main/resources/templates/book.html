@@ -148,7 +148,7 @@
                             <img th:src="${b.bookImage}" alt="Book Image" class="book-img">
                         </td>
                         <td><span th:text="${b.authorName}"></span></td>
-                        <td><span th:text="${b.publisherName}"></span></td>
+                        <td><span th:text="${b.publisherName.name}"></span></td>
                         <td><span th:text="${b.availableQuantity}"></span></td>
                         <td class="action-cell">
                             <button class="btn-action edit" title="Edit">

@@ -44,8 +44,11 @@ public class PublicationController {
 
     @PostMapping("publication/{name}")
     public String deletePublication(@PathVariable String name){
-        service.delete(name);
-        return "redirect:/publication";
+        if(service.hasNoChild(name)){
+            service.delete(name);
+            return "redirect:/publication";
+        }
+        return "redirect:/publication?child=true";
     }
 
     @PostMapping("publication/update")
