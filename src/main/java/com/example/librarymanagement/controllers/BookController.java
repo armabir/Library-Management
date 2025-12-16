@@ -50,8 +50,15 @@ public class BookController {
 
     @PostMapping("book/{bookName}/delete")
     public String deleteBook(@PathVariable String bookName){
-        bookService.delete(bookName);
-        return "redirect:/book";
+        if(bookService.hasNoChild(bookName)){
+            bookService.delete(bookName);
+            return "redirect:/book";
+        }
+        else if(bookService.hasNoPurchase(bookName)){
+            bookService.delete(bookName);
+            return "redirect:/book";
+        }
+        return "redirect:/book?child=true";
     }
 
     @PostMapping("book/update")

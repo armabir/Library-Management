@@ -1,6 +1,7 @@
 package com.example.librarymanagement.service;
 
 import com.example.librarymanagement.interfaces.StudentServiceInterface;
+import com.example.librarymanagement.model.Publication;
 import com.example.librarymanagement.model.Student;
 import com.example.librarymanagement.model.Vendor;
 import com.example.librarymanagement.repository.StudentRepository;
@@ -35,6 +36,11 @@ public class StudentService implements StudentServiceInterface {
         }
         repository.save(student);
         return student;
+    }
+
+    public boolean hasNoChild(String email){
+        Student student = repository.findById(email).orElse(null);
+        return student.getAllotmentList().isEmpty();
     }
 
     public void delete(String email){

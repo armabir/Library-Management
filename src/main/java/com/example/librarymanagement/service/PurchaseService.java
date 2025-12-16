@@ -44,7 +44,17 @@ public class PurchaseService implements PurchaseServiceInterface {
         return purchase;
     }
 
+    //// Best Example for using Hibernate!!
+    public boolean hasEnoughBook(int id){
+        Purchase purchase = repository.findById(id).orElse(null);
+
+        // Best Example for using Hibernate!!
+        return purchase.getQuantity() <= purchase.getBook().getAvailableQuantity();
+    }
+
     public void delete(Integer id){
+        Purchase purchase = repository.findById(id).orElse(null);
+        bookService.updateQuantity(purchase.getBook(), purchase.getQuantity()*(-1));
         repository.deleteById(id);
     }
 

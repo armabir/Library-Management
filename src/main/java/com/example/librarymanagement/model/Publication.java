@@ -23,9 +23,9 @@ public class Publication {
     @OneToMany(mappedBy = "publisherName")
     private List<Book> bookList;
 
-    public Publication(String description, String address, String name) {
-        this.description = description;
-        this.address = address;
+    public Publication(String name, String address, String description) {
         this.name = name;
+        this.address = address;
+        this.description = description;
     }
 }

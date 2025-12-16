@@ -19,16 +19,13 @@ public class DashboardController {
     private final StudentService studentService;
     private final VendorService vendorService;
     private final AllotmentService allotmentService;
-    private final PurchaseService purchaseService;
 
     public DashboardController(BookService bookService, StudentService studentService,
-                               VendorService vendorService, AllotmentService allotmentService,
-                               PurchaseService purchaseService) {
+                               VendorService vendorService, AllotmentService allotmentService) {
         this.bookService = bookService;
         this.studentService = studentService;
         this.vendorService = vendorService;
         this.allotmentService = allotmentService;
-        this.purchaseService = purchaseService;
     }
 
     @GetMapping("/")

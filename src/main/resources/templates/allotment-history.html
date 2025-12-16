@@ -145,7 +145,7 @@
                     <tr th:each="allot, a : ${allotments}">
                         <td><span th:text="${a.count}"></span></td>
                         <td><span th:text="${allot.book.bookName}"></span></td>
-                        <td><span th:text="${allot.studentEmail}"></span></td>
+                        <td><span th:text="${allot.student.email}"></span></td>
                         <td>
                             <span class="subscription-badge" th:text="${allot.subscriptionType.title}"></span>
                         </td>

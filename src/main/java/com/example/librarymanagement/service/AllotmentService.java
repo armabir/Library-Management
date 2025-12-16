@@ -42,7 +42,7 @@ public class AllotmentService implements AllotmentServiceInterface {
 
     public void delete(Integer id){
         Allotment allotment = repository.findById(id).orElse(null);
-        bookService.updateQuantity(allotment.getBook(), -1);
+        bookService.updateQuantity(allotment.getBook(), 1);
         repository.deleteById(id);
     }
 }

@@ -126,6 +126,11 @@
                 <span class="toast-message">Student already Exists!</span>
             </div>
 
+            <!-- prevent deleting with child-->
+            <div th:if="${param.child}" class="toast">
+                <span class="toast-message">Can't delete student with existing allotments</span>
+            </div>
+
             <!-- Table -->
             <div class="table-wrapper">
                 <table class="data-table">

@@ -7,6 +7,7 @@ import java.util.List;
 public interface StudentServiceInterface {
     List<Student> getALL();
     Student save(Student student);
+    boolean hasNoChild(String email);
     void delete(String email);
     void update(Student student);
 }

@@ -42,6 +42,16 @@ public class BookService implements BookServiceInterface {
         return book;
     }
 
+    public boolean hasNoChild(String name){
+        Book book = repository.findById(name).orElse(null);
+        return book.getAllotmentList().isEmpty();
+    }
+
+    public boolean hasNoPurchase(String name){
+        Book book = repository.findById(name).orElse(null);
+        return book.getPurchaseList().isEmpty();
+    }
+
     public void delete(String bookName){
         repository.deleteById(bookName);
     }

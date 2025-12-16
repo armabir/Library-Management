@@ -177,7 +177,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="studentName">Student</label>
-                    <select th:field="*{studentEmail}" id="studentName" required>
+                    <select th:field="*{student}" id="studentName" required>
                         <option value="">Select Student</option>
                         <option th:each="student : ${students}" th:value="${student.email}" th:text="${student.name}"></option>
                     </select>

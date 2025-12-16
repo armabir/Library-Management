@@ -46,9 +46,11 @@ public class StudentController {
 
     @PostMapping("student/{email}/delete")
     public String deleteStudent(@PathVariable String email){
-
-        service.delete(email);
-        return "redirect:/student";
+        if(service.hasNoChild(email)){
+            service.delete(email);
+            return "redirect:/student";
+        }
+        return "redirect:/student?child=true";
     }
 
     @PostMapping("student/update")

@@ -15,7 +15,6 @@ public class Allotment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String studentEmail;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate allotmentDate;
@@ -28,9 +27,13 @@ public class Allotment {
     @JoinColumn(name = "subscription_id")
     private Subscription subscriptionType;
 
-    public Allotment(Book book, String studentEmail, Subscription subscriptionType, LocalDate startDate, LocalDate endDate, LocalDate allotmentDate) {
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    public Allotment(Book book, Student student, Subscription subscriptionType, LocalDate startDate, LocalDate endDate, LocalDate allotmentDate) {
         this.book = book;
-        this.studentEmail = studentEmail;
+        this.student = student;
         this.subscriptionType = subscriptionType;
         this.startDate = startDate;
         this.endDate = endDate;

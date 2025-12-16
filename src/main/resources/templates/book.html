@@ -126,6 +126,11 @@
                 <span class="toast-message">Book already Exists!</span>
             </div>
 
+            <!-- prevent deleting with child-->
+            <div th:if="${param.child}" class="toast">
+                <span class="toast-message">Can't delete book with existing allotments or purchases</span>
+            </div>
+
             <!-- Table -->
             <div class="table-wrapper">
                 <table class="data-table">

@@ -53,8 +53,11 @@ public class PurchaseController {
 
     @PostMapping("purchase/{id}/delete")
     public String deletePurchase(@PathVariable Integer id){
-        purchaseService.delete(id);
-        return "redirect:/purchase";
+        if(purchaseService.hasEnoughBook(id)){
+            purchaseService.delete(id);
+            return "redirect:/purchase";
+        }
+        return "redirect:/purchase?child=true";
     }
 
 //    @PostMapping("purchase/update")

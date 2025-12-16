@@ -33,7 +33,7 @@ public class AllotmentController {
 
     @GetMapping("allotment")
     public String getAllotment(Model model){
-        model.addAttribute("dto", new AllotmentDto(null, "", null, "", ""));
+        model.addAttribute("dto", new AllotmentDto(null, null, null, "", ""));
 
         List<Book> bookList = bookService.getALL();
         model.addAttribute("books", bookList);
