@@ -39,8 +39,9 @@ public class PurchaseService implements PurchaseServiceInterface {
             return null;
         }
         repository.save(purchase);
-        //// can we reduce this code with hibernate??
         bookService.updateQuantity(purchase.getBook(), purchase.getQuantity());
+        /// can we reduce this code with hibernate??
+        /// purchase.getBook().setAvailableQuantity(purchase.getBook().getAvailableQuantity() + purchase.getQuantity());
         return purchase;
     }
 
@@ -54,6 +55,8 @@ public class PurchaseService implements PurchaseServiceInterface {
 
     public void delete(Integer id){
         Purchase purchase = repository.findById(id).orElse(null);
+
+        /// same here, use Hibernate Relation??
         bookService.updateQuantity(purchase.getBook(), purchase.getQuantity()*(-1));
         repository.deleteById(id);
     }

@@ -37,12 +37,18 @@ public class AllotmentService implements AllotmentServiceInterface {
         }
         repository.save(allotment);
         bookService.updateQuantity(allotment.getBook(), -1);
+
+        //// Is this better??
+//        allotment.getBook().setAvailableQuantity(allotment.getBook().getAvailableQuantity() - 1);
         return allotment;
     }
 
     public void delete(Integer id){
         Allotment allotment = repository.findById(id).orElse(null);
         bookService.updateQuantity(allotment.getBook(), 1);
+
+        //// Is this better??
+//        allotment.getBook().setAvailableQuantity(allotment.getBook().getAvailableQuantity() + 1);
         repository.deleteById(id);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Book {
     @Id
-    private String bookName;
+    private String bookName; /// if @Id was id, then should I check uniqueness with the bookName?
     private String bookImage;
     private String authorName;
     private Integer availableQuantity;

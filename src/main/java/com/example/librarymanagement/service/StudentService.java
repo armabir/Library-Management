@@ -29,7 +29,7 @@ public class StudentService implements StudentServiceInterface {
     }
 
     public Student save(Student student){
-        Optional<Student> optional = repository.findById(student.getName());
+        Optional<Student> optional = repository.findById(student.getEmail());
         if (optional.isPresent()){
             System.out.println("Student already Exist");
             return null;

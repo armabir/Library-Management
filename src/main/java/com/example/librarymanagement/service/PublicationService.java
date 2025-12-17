@@ -42,10 +42,6 @@ public class PublicationService implements PublicationServiceInterface {
         return publication;
     }
 
-//    public Publication getByName(String name){
-//        return repository.findById(name).orElse(null);
-//    }
-
     public boolean hasNoChild(String name){
         Publication publication = repository.findById(name).orElse(null);
         return publication.getBookList().isEmpty();

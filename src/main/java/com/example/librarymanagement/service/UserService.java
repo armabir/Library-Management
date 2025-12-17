@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserServiceInterface {
+
     public final UserRepository repository;
 
     public UserService(UserRepository repository) {
@@ -23,7 +24,7 @@ public class UserService implements UserServiceInterface {
     }
 
     public User saveUser(User user){
-        Optional<User> optional = repository.findById(user.getName());
+        Optional<User> optional = repository.findById(user.getEmail());
         if (optional.isPresent()){
             System.out.println("User already Exist");
             return null;

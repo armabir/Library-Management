@@ -19,9 +19,6 @@ import java.util.Optional;
 @Service
 public class BookService implements BookServiceInterface {
 
-    @Autowired
-    DataSource dataSource;
-
     private final BookRepository repository;
 
     public BookService(BookRepository repository) {
@@ -61,6 +58,7 @@ public class BookService implements BookServiceInterface {
     }
 
     // used for purchase, allotment, return
+    /// is this really needed??
     public void updateQuantity(Book book, int quantity){
         book.setAvailableQuantity(book.getAvailableQuantity() + quantity);
         repository.save(book);
