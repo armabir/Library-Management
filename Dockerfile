@@ -24,5 +24,5 @@ RUN ./mvnw clean package -DskipTests
 # Expose port 8080 (Render maps this automatically)
 EXPOSE 8080
 
-# Run the Spring Boot application
-CMD ["java", "-jar", "target/*.jar"]
+# Find the Spring Boot fat jar dynamically
+CMD java -jar target/*-SNAPSHOT.jar
