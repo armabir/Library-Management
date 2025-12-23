@@ -1,5 +1,5 @@
-# Use Java 17 (matches Spring Boot 3+)
-FROM eclipse-temurin:17-jdk-jammy
+# Use Java 21 (matches your Spring Boot project)
+FROM eclipse-temurin:21-jdk-jammy
 
 # Set working directory
 WORKDIR /app
@@ -9,7 +9,7 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# Make mvnw executable (important!)
+# Make mvnw executable (important for Linux/Docker)
 RUN chmod +x mvnw
 
 # Download dependencies (offline)
